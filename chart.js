@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 const ctx = document.getElementById('testChart').getContext('2d');
 
 const searchData = {
