@@ -1,69 +1,49 @@
+// Select the canvas element in the HTML where the chart will be rendered
 const ctx = document.getElementById('searchChart').getContext('2d');
 
-// Customize this data to match your search terms and years
+// Sample data for Google search trends (you can replace this with your own data)
 const searchData = {
-    labels: [], // X-axis labels (years)
+    labels: [2000, 2001, 2002, 2003, 2004, 2005],
     datasets: [
         {
             label: 'Search Term 1',
-            data: [], // Y-axis data (search counts)
+            data: [100, 150, 200, 250, 300, 350],
             borderColor: 'rgba(255, 99, 132, 1)',
             borderWidth: 2,
             fill: false,
-            tension: 0.1, // Smooth curve
+            tension: 0.1, // Smoothing of the line
         },
         {
             label: 'Search Term 2',
-            data: [], // Y-axis data (search counts)
+            data: [80, 120, 180, 220, 260, 320],
             borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 2,
             fill: false,
-            tension: 0.1,
+            tension: 0.1, // Smoothing of the line
         }
     ]
 };
 
+// Configuration for the chart
 const config = {
-    type: 'line',
+    type: 'line', // Line chart type
     data: searchData,
     options: {
-        responsive: true,
         scales: {
             x: {
-                type: 'linear',
-                position: 'bottom',
-                ticks: {
-                    beginAtZero: true,
-                }
+                type: 'linear', // X-axis as linear scale
+                position: 'bottom', // X-axis position
             },
             y: {
-                beginAtZero: true
+                beginAtZero: true, // Y-axis starts at zero
             }
         },
         animation: {
-            duration: 2000, // Animation duration in ms
-            easing: 'easeOutQuart', // Animation easing
-            loop: false,
-            onProgress: function(animation) {
-                const chartInstance = animation.chart;
-                const ctx = chartInstance.ctx;
-                ctx.clearRect(0, 0, chartInstance.width, chartInstance.height);
-            }
+            duration: 2000, // Animation duration in milliseconds
+            easing: 'easeOutBounce', // Animation easing style
         }
     }
 };
 
-// Function to update chart data dynamically
-function updateChartData(chart, labels, data1, data2) {
-    chart.data.labels = labels;
-    chart.data.datasets[0].data = data1;
-    chart.data.datasets[1].data = data2;
-    chart.update();
-}
-
-const searchChart = new Chart(ctx, config);
-
-// Example: update chart data
-setTimeout(() => {
-    updateChartData(searchChart, [2000, 2001, 2002, 2003, 2004, 2005], [100, 150, 200, 250, 300, 350], [80, 120, 180, 220, 260, 320]);
-}, 500);
+// Render the chart using Chart.js
+new Chart(ctx, config);
