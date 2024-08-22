@@ -1,7 +1,5 @@
-// Select the canvas element in the HTML where the chart will be rendered
-const ctx = document.getElementById('searchChart').getContext('2d');
+const ctx = document.getElementById('testChart').getContext('2d');
 
-// Sample data for Google search trends (you can replace this with your own data)
 const searchData = {
     labels: [2000, 2001, 2002, 2003, 2004, 2005],
     datasets: [
@@ -24,7 +22,6 @@ const searchData = {
     ]
 };
 
-// Configuration for the chart
 const config = {
     type: 'line', // Line chart type
     data: searchData,
@@ -39,11 +36,26 @@ const config = {
             }
         },
         animation: {
-            duration: 2000, // Animation duration in milliseconds
-            easing: 'easeOutBounce', // Animation easing style
+            duration: 5000, // Animation duration in milliseconds
+            easing: 'easeInOutCubic', // Animation easing style
         }
     }
 };
 
-// Render the chart using Chart.js
-new Chart(ctx, config);
+let myChart = new Chart(ctx, config); // Create the chart instance
+
+// Play/Pause Button Functionality
+let isPlaying = false;
+const playPauseBtn = document.getElementById('playPauseBtn');
+
+playPauseBtn.addEventListener('click', function() {
+    if (isPlaying) {
+        myChart.options.animation.duration = 0; // Stop the animation
+        playPauseBtn.textContent = 'Play';
+    } else {
+        myChart.options.animation.duration = 5000; // Resume the animation
+        myChart.update(); // Trigger the update to restart animation
+        playPauseBtn.textContent = 'Pause';
+    }
+    isPlaying = !isPlaying;
+});
